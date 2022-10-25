@@ -2,7 +2,7 @@
 // A system was attempted to allow cross-object constraints, though there were
 //   issues with passing the execution context. Could explore the issue later if need arises.
 
-export default class Mirror {
+class Mirror {
     static PREDICATES = {
         less:           (a, b) => a < b,
         lessOrEqual:    (a, b) => a <= b,
@@ -11,6 +11,8 @@ export default class Mirror {
         greaterOrEqual: (a, b) => a > b,
     }
 
+    // pass the constructor any truthy value or object to get debug mode.
+    // what an interface...
     constructor(debugMode) {
         this.objects = {}; // tools cache references to particular objects
         this.debug = !!debugMode;
@@ -107,19 +109,10 @@ export default class Mirror {
     }
 
     static castValue(type, value) {
-        // switch(type) {
-        //     case 'string':
-        //         return String(value);
-        //     case 'number':
-        //         return Number(value);
-        //     case 'boolean':
-        //         console.log(value);
-        //         return !!value;
-        // }
         const functions = {
             string: String,
             number: Number,
-            boolean: (x) => !!x,
+            boolean: (x) => !!x, // does this work?
         };
         return functions[type](value);
     }
@@ -146,4 +139,8 @@ export default class Mirror {
 
         return true; // all systems go!
     }
+}
+
+module.exports = {
+    Mirror,
 }
