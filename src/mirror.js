@@ -1,3 +1,5 @@
+'use strict';
+
 // Right now the constraints can only reference the current/same object.
 // A system was attempted to allow cross-object constraints, though there were
 //   issues with passing the execution context. Could explore the issue later if need arises.
@@ -38,7 +40,7 @@ class Mirror {
 
     removeObject(name) {
         if (Object.keys(this.objects).includes(name)) {
-            this.objects[name] = undefined;
+            delete this.objects[name];
             return true;
         } else {
             console.warn(`Tried to remove non-cached object '${name}' from Mirror.`);
@@ -83,6 +85,7 @@ class Mirror {
         // Attach event
         inputElement.addEventListener('change', (e) => {
             // Check for constraint object.
+            console.log('hello from change!');
             const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
             const objectRef = this.objects[object];
             if (Mirror.validConstraint.call(objectRef, constraint)) {
